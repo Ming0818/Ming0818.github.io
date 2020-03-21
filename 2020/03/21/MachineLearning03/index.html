@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>MachineLearning03 | yinqm_Blog | 书不成字，纸短情长</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="线性分类P1线性分类概述 &amp; P2感知机 分类是机器学习中的一个核心问题，在监督学习中，当输出变量Y取有限个离散值时，预测问题便成为分类问题。从数据中学习一个分类模型或分类决策函数，称为分类器。分类器对新的输入进行输出的预测，称为分类，可能的输出称为类，分类的类别为多个时，称为多类分类问题，主要研究的都为二分类问题。许多机器学习方法都是可以用来解分类问题，比如：感知机、朴素贝叶斯、支持向量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MachineLearning03">
+<meta property="og:url" content="http://yinqm.com/2020/03/21/MachineLearning03/index.html">
+<meta property="og:site_name" content="yinqm_Blog">
+<meta property="og:description" content="线性分类P1线性分类概述 &amp; P2感知机 分类是机器学习中的一个核心问题，在监督学习中，当输出变量Y取有限个离散值时，预测问题便成为分类问题。从数据中学习一个分类模型或分类决策函数，称为分类器。分类器对新的输入进行输出的预测，称为分类，可能的输出称为类，分类的类别为多个时，称为多类分类问题，主要研究的都为二分类问题。许多机器学习方法都是可以用来解分类问题，比如：感知机、朴素贝叶斯、支持向量">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_1.PNG">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_2.PNG">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_3.PNG">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_4.PNG">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_5.PNG">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_6.PNG">
+<meta property="article:published_time" content="2020-03-21T15:28:25.000Z">
+<meta property="article:modified_time" content="2020-03-21T16:20:13.665Z">
+<meta property="article:author" content="Eric Yin">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_1.PNG">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/TX.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Eric Yin</h5>
+          <a href="mailto:eric_ming96@163.com" title="eric_ming96@163.com" class="mail">eric_ming96@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Ming0818" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/5414507143?is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.popiask.cn/EricYin" target="_blank" rel="noopener"  >
+                <i class="icon icon-lg icon-link"></i>
+                向我提问POPI
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">MachineLearning03</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">MachineLearning03</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-21T15:28:25.000Z" itemprop="datePublished" class="page-time">
+  2020-03-21
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#线性分类"><span class="post-toc-number">1.</span> <span class="post-toc-text">线性分类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#P1线性分类概述-amp-P2感知机"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">P1线性分类概述 &amp; P2感知机</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#P3线性判别分析"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">P3线性判别分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#P4目标函数分析-amp-P5逻辑回归"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">P4目标函数分析 &amp; P5逻辑回归</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#P6高斯判别分析-amp-P7最大似然函数"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">P6高斯判别分析 &amp; P7最大似然函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#P8最大似然函数延申-amp-P9朴素贝叶斯"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">P8最大似然函数延申 &amp; P9朴素贝叶斯</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-MachineLearning03"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">MachineLearning03</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-21 23:28:25" datetime="2020-03-21T15:28:25.000Z"  itemprop="datePublished">2020-03-21</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="线性分类"><a href="#线性分类" class="headerlink" title="线性分类"></a>线性分类</h1><h2 id="P1线性分类概述-amp-P2感知机"><a href="#P1线性分类概述-amp-P2感知机" class="headerlink" title="P1线性分类概述 &amp; P2感知机"></a>P1线性分类概述 &amp; P2感知机</h2><ul>
+<li>分类是机器学习中的一个核心问题，在监督学习中，当输出变量Y取有限个离散值时，预测问题便成为分类问题。从数据中学习一个分类模型或分类决策函数，称为分类器。分类器对新的输入进行输出的预测，称为分类，可能的输出称为类，分类的类别为多个时，称为多类分类问题，主要研究的都为二分类问题。许多机器学习方法都是可以用来解分类问题，比如：感知机、朴素贝叶斯、支持向量机、决策树、逻辑回归、AdaBoost、神经网络等等。感知机是神经网络和支持向量机的基础，所以把感知机弄清楚对于其它算法的理解还是挺有必要的。</li>
+<li>感知机是一种广泛使用的线性分类器。就是说数据必须是线性可分的(虽然实际中很难达到要求，但是可以通过一些方法将数据集变为线性可分)，属于判别模型(Discriminative Model)。感知器可谓是最简单的人工神经网络，只有一个神经元。感知器是对生物神经元的简单数学模拟，有与生物神经元相对应的部件，如权重（突触）、偏置（阈值）及激活函数（细胞体），输出为+1或-1。感知器是一种简单的两类线性分类模型</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_1.PNG" alt="线性分类" title="">
+                </div>
+                <div class="image-caption">线性分类</div>
+            </figure>
+<h2 id="P3线性判别分析"><a href="#P3线性判别分析" class="headerlink" title="P3线性判别分析"></a>P3线性判别分析</h2><ul>
+<li>线性判别分析(linear discriminant analysis，LDA)是对费舍尔的线性鉴别方法的归纳，这种方法使用统计学，模式识别和机器学习方法，试图找到两类物体或事件的特征的一个线性组合，以能够特征化或区分它们。所得的组合可用来作为一个线性分类器，或者，更常见的是，为后续的分类做降维处理。</li>
+<li>假设我们对一张100*100像素的图片做人脸识别，每个像素是一个特征，那么会有10000个特征，而对应的类别标签y仅仅是0/1值，1代表是人脸。这么多特征不仅训练复杂，而且不必要特征对结果会带来不可预知的影响，但我们想得到降维后的一些最佳特征（与y关系最密切的）。</li>
+<li>主要思想是将一个高维空间中的数据投影到一个较低维的空间中，且投影后要保证各个类别的类内方差小而类间均值差别大，这意味着同一类的高维数据投影到低维空间后相同类别的聚在一起，而不同类别之间相距较远。</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_2.PNG" alt="线性分类" title="">
+                </div>
+                <div class="image-caption">线性分类</div>
+            </figure>
+<h2 id="P4目标函数分析-amp-P5逻辑回归"><a href="#P4目标函数分析-amp-P5逻辑回归" class="headerlink" title="P4目标函数分析 &amp; P5逻辑回归"></a>P4目标函数分析 &amp; P5逻辑回归</h2><ul>
+<li>线性判别分析（LDA）是一种有监督的数据降维算法，它的目标是最大化类间差异，最小化类内差异。数据经过投影之后，在低维空间里，同类样本聚集在一起，不同类的样本相距尽可能远。类内差异用每个类的方差来衡量，类间差异用各个类的类中心之间的距离来衡量，二者的比值为我们要优化的目标。由此构造出如P4中的损失函数，求解这一问题最后归结为求解矩阵的特征值问题。前面介绍的感知器算法的目标函数，欧氏距离损失，代表的都是经验风险，即在训练样本集上让误差最小化。这样做的泛化性能不一定好，还有一种做法为结构化风险最小化，典型代表是支持向量机。</li>
+<li>logistic回归又称logistic回归分析，是一种广义的线性回归分析模型，常用于数据挖掘，疾病自动诊断，经济预测等领域。例如，探讨引发疾病的危险因素，并根据危险因素预测疾病发生的概率等。以胃癌病情分析为例，选择两组人群，一组是胃癌组，一组是非胃癌组，两组人群必定具有不同的体征与生活方式等。因此因变量就为是否胃癌，值为“是”或“否”，自变量就可以包括很多了，如年龄、性别、饮食习惯、幽门螺杆菌感染等。自变量既可以是连续的，也可以是分类的。然后通过logistic回归分析，可以得到自变量的权重，从而可以大致了解到底哪些因素是胃癌的危险因素。同时根据该权值可以根据危险因素预测一个人患癌症的可能性。是一种用于解决二分类（0 or 1）问题的机器学习方法，用于估计某种事物的可能性。</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_3.PNG" alt="线性分类" title="">
+                </div>
+                <div class="image-caption">线性分类</div>
+            </figure>
+<h2 id="P6高斯判别分析-amp-P7最大似然函数"><a href="#P6高斯判别分析-amp-P7最大似然函数" class="headerlink" title="P6高斯判别分析 &amp; P7最大似然函数"></a>P6高斯判别分析 &amp; P7最大似然函数</h2><ul>
+<li>高斯判别分析的作用也是用于分类。对于两类样本，其服从伯努利分布，而对每个类中的样本，假定都服从高斯分布，根据训练样本，估计出先验概率以及高斯分布的均值和协方差矩阵（注意这里两类内部高斯分布的协方差矩阵相同），即可通过贝叶斯公式求出一个新样本分别属于两类的概率，进而可实现对该样本的分类。GDA详细推导如P6，那么高斯判别分析的核心工作就是估计未知量ϕ,μ0,μ1,Σ。如何来估计这些参数？又该最大似然估计上场了。其对数似然函数如P6所示，推导如P7。</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_4.PNG" alt="线性分类" title="">
+                </div>
+                <div class="image-caption">线性分类</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_5.PNG" alt="线性分类" title="">
+                </div>
+                <div class="image-caption">线性分类</div>
+            </figure>
+<h2 id="P8最大似然函数延申-amp-P9朴素贝叶斯"><a href="#P8最大似然函数延申-amp-P9朴素贝叶斯" class="headerlink" title="P8最大似然函数延申 &amp; P9朴素贝叶斯"></a>P8最大似然函数延申 &amp; P9朴素贝叶斯</h2><ul>
+<li>上面的推导似乎很复杂，但其结果却是非常简洁。通过上述公式，所有的参数都已经估计出来，需要判断一个新样本x时，可分别使用贝叶斯求出p(y=0|x)和p(y=1|x)，取概率更大的那个类。实际计算时，我们只需要比大小，那么贝叶斯公式中分母项可以不计算，由于2个高斯函数协方差矩阵相同，则高斯分布前面那相同部分也可以忽略。实际上，GDA算法也是一个线性分类器。</li>
+<li>贝叶斯学派的思想可以概括为先验概率+数据=后验概率。也就是说我们在实际问题中需要得到的后验概率，可以通过先验概率和数据一起综合得到。数据大家好理解，被频率学派攻击的是先验概率，一般来说先验概率就是我们对于数据所在领域的历史经验，但是这个经验常常难以量化或者模型化，于是贝叶斯学派大胆的假设先验分布的模型，比如正态分布，beta分布等。这个假设一般没有特定的依据，因此一直被频率学派认为很荒谬。虽然难以从严密的数学逻辑里推出贝叶斯学派的逻辑，但是在很多实际应用中，贝叶斯理论很好用，比如垃圾邮件分类，文本分类。</li>
+<li>决策的目标是最小化分类错误率，贝叶斯最优分类器要对每个样本x，选择能使后验概率P(c|x)最大的类别c标记。在现实任务中后验概率通常难以直接获得。从这个角度来说，机器学习所要实现的是基于有限的训练样本集尽可能准确地估计出后验概率 P(c|x)。大体来说，主要有两种策略：给定x，可通过直接建模P(c|x)来预测c，这样得到的是“判别式模型”，例如，决策树、BP神经网络、支持向量机等等；也可先对联合概率分布P(x,c)建模，然后在由此获得P(c|x)，这样得到的是“生成式模型”。</li>
+<li>贝叶斯估计中类先验概率P(c)表达了样本空间中各类样本所占的比例，根据大数定律，当训练集包含充足的独立同分布样本时，P(c)可通过各类样本出现的频率来进行估计。因为对于类条件概率P(x|c)来说，由于它涉及关于x所有属性的联合概率，直接根据样本出现的频率来估计将会遇到严重的困难。假如样本的d个属性都是二值的，则样本空间将有2的d次方种可能取值，在现实中，这个种类数往往大于训练样本，也就是说，很多样本取值在训练集中根本没有出现，直接使用频率来估计P(x|c)显然不可行，因为“未被观测到”与“出现概率为零”通常是不同的。这可以通过极大似然估计来解决。</li>
+<li>基于贝叶斯公式来估计后验概率P(c|x)的主要困难在于：类条件概率P(x|c)是所有属性上的联合概率，难以从有限的训练样本直接估计而得。因此朴素贝叶斯分类器采用了“属性条件独立性假设”：对已知类别，假设所有属性相互独立。也就是说，假设每个属性独立的对分类结果发生影响。</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/3_6.PNG" alt="线性分类" title="">
+                </div>
+                <div class="image-caption">线性分类</div>
+            </figure>
+
+
+
+
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-03-21T16:20:13.665Z" itemprop="dateUpdated">2020-03-22 00:20:13</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/03/21/MachineLearning03/" target="_blank" rel="external">http://yinqm.com/2020/03/21/MachineLearning03/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://yinqm.com">
+            <img src="/img/TX.JPG" alt="Eric Yin">
+            Eric Yin
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yinqm.com/2020/03/21/MachineLearning03/&title=《MachineLearning03》 — yinqm_Blog&pic=http://yinqm.com/img/TX.JPG" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yinqm.com/2020/03/21/MachineLearning03/&title=《MachineLearning03》 — yinqm_Blog&source=小破站还没设计好，先将就着，哈哈哈哈" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yinqm.com/2020/03/21/MachineLearning03/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MachineLearning03》 — yinqm_Blog&url=http://yinqm.com/2020/03/21/MachineLearning03/&via=http://yinqm.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yinqm.com/2020/03/21/MachineLearning03/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/03/21/MachineLearning01/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MachineLearning01</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        Thanks~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/55555.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/55555.JPG" data-alipay="/img/44444.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>This blog is licensed under a <a rel="license noopener" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Eric Yin &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yinqm.com/2020/03/21/MachineLearning03/&title=《MachineLearning03》 — yinqm_Blog&pic=http://yinqm.com/img/TX.JPG" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yinqm.com/2020/03/21/MachineLearning03/&title=《MachineLearning03》 — yinqm_Blog&source=小破站还没设计好，先将就着，哈哈哈哈" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yinqm.com/2020/03/21/MachineLearning03/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MachineLearning03》 — yinqm_Blog&url=http://yinqm.com/2020/03/21/MachineLearning03/&via=http://yinqm.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yinqm.com/2020/03/21/MachineLearning03/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yinqm.com/2020/03/21/MachineLearning03/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
