@@ -6,6 +6,8 @@
   <title>YinQiuMing~Blog | 书不成字，纸短情长</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="theme-color" content="#3F51B5">
+  
   
   <meta name="keywords" content="AI">
   <meta name="description" content="小破站还没设计好，先将就着，哈哈哈哈">
@@ -19,8 +21,10 @@
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary">
   
+    <link rel="alternative" href="/atom.xml" title="YinQiuMing~Blog" type="application/atom+xml">
+  
   <meta name="summary" content="小破站还没设计好，先将就着，哈哈哈哈">
-  <link rel="shortcut icon" href="/">
+  <link rel="shortcut icon" href="/favicon.ico">
   
 <link rel="stylesheet" href="/css/style.css">
 
@@ -36,15 +40,50 @@
   </a>
   <div class="brand-wrap">
     <div class="brand">
-      <a href="/" class="avatar"><img src=""></a>
+      <a href="/" class="avatar"><img src="/img/logo1.png"></a>
       <hgroup class="introduce">
         <h5 class="nickname">Eric Yin</h5>
-        <a href="mailto:undefined" class="mail">
+        <a href="mailto:eric_ming96@163.com" title="eric_ming96@163.com" class="mail">eric_ming96@163.com</a>
       </hgroup>
     </div>
   </div>
   <div class="scroll-wrap flex-col">
     <ul class="nav">
+      
+          <li class="waves-block waves-effect active">
+            <a href="/"  >
+              <i class="icon icon-lg icon-home"></i>
+              主页
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/archives"  >
+              <i class="icon icon-lg icon-archives"></i>
+              Archives
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/tags"  >
+              <i class="icon icon-lg icon-tags"></i>
+              Tags
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="https://github.com/Ming0818" target="_blank" >
+              <i class="icon icon-lg icon-github"></i>
+              Github
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="https://weibo.com/u/5414507143?is_all=1" target="_blank" >
+              <i class="icon icon-lg icon-weibo"></i>
+              Weibo
+            </a>
+          </li>
       
     </ul>
 
@@ -53,7 +92,7 @@
   <p>YinQiuMing~Blog &copy; 2020</p>
   <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
   <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
-  <a href="" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
 </footer>
 
   </div>
@@ -68,6 +107,20 @@
         </a>
         <div class="flex-col header-title ellipsis">YinQiuMing~Blog</div>
         
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
         
     </div>
 </header>
@@ -111,41 +164,41 @@
 
     <div class="post-content" id="post-content" itemprop="postContent" >
 
-    
-         机器学习中常用的数学基础 
-   P1高斯分布（正态分布）  
-  自然界产生的数据分布一般是正态分布（如年龄、身高、体重等），故当对数据不清楚其潜在的结构、即对数据潜在分布模式不明确时，近似采用正态分布。 
- 
-  在机器学习中，目标通常是使得数据线性可分，甚至意味着将数据投影到更高维空间，找到一个可拟合的超平面（如SVM核，神经网络层，softmax等）。原因是“线性分界通常有助于减少方差variance而且是最简单，自然和可理解的”，同时减少数学、计算的复杂性。同时，当我们聚焦线性可分时，通常可以很好减少异常点、影响点和杠杆点的作用。因为超平面是对影响点和杠点（异常点）非常敏感。举个例子，在二维空间中，我们有一个预测器predictor(X)，和目标值（y)，假设X和y是很好的正相关。在这个情形下，假设X是正态分布，y也是正态分布，那么你可以拟合到一条很直的线，相比边界点（异常点，杠杆点），很多点都集中在线的中间，所以这个预测回归线在预测未知数据时，降低方差的影响。 
- 
- 
-   
-   P2有偏估计&amp;无偏估计  
- 本质来讲，无偏/无偏估计是指估算统计量的公式，无偏估计就是可以预见，多次采样计算的统计量是在真实值左右两边。类似于正态分布的钟型图形。比如对于均值μ估计。一定有的比μ大，有的比μ小。那么对于有偏估计，就是多次采样，估算的统计量将会在真实值的一侧（都是大于或者都是小于真实值）无偏估计并不一定比有偏估计更加”有效”，因为所谓估算有效是指更加靠近真实值。 
- 
-   
-   P3二次型  
- 二次型：n个变量的二次多项式称为二次型，即在一个多项式中，未知数的个数为任意多个，但每一项的次数都为2的多项式。线性代数的重要内容之一，它起源于几何学中二次曲线方程和二次曲面方程化为标准形问题的研究。二次型理论与域的特征有关。PCA跟特征值和特征向量有关，应该跟二次型有关。 
- 
-   
-   P4二次型 &amp;&amp; P5：  
- PCA主成分分析用到实对称阵的相似对角化。PCA的目的是降噪和去冗余，是一种常用的数据分析方法。PCA通过线性变换将原始数据变换为一组各维度线性无关的表示，可用于提取数据的主要特征分量，常用于高维数据的降维。 
- 
-   
-   P6协方差（Covariance）  
- 在概率论和统计学中用于衡量两个变量的总体误差。而方差是协方差的一种特殊情况，即当两个变量是相同的情况。 
- 协方差表示的是两个变量的总体的误差，这与只表示一个变量误差的方差不同。 如果两个变量的变化趋势一致，也就是说如果其中一个大于自身的期望值，另外一个也大于自身的期望值，那么两个变量之间的协方差就是正值。 如果两个变量的变化趋势相反，即其中一个大于自身的期望值，另外一个却小于自身的期望值，那么两个变量之间的协方差就是负值。用于机器学习中衡量多个特征之间的关系。 
- 
-   
-   P7Jensen不等式（Jensen’s inequality）  
- 在概率论、机器学习、测度论、统计物理等领域都有相关应用。在机器学习领域，用Jensen不等式用来证明KL散度大于等于0,EM算法推导最后也用到了Jensen不等式。 
- 
-   
+     
+        <p>机器学习中常用的数学基础</p>
+<h2 id="P1高斯分布（正态分布）"><a href="#P1高斯分布（正态分布）" class="headerlink" title="P1高斯分布（正态分布）"></a>P1高斯分布（正态分布）</h2><ul>
+<li><p>自然界产生的数据分布一般是正态分布（如年龄、身高、体重等），故当对数据不清楚其潜在的结构、即对数据潜在分布模式不明确时，近似采用正态分布。</p>
+</li>
+<li><p>在机器学习中，目标通常是使得数据线性可分，甚至意味着将数据投影到更高维空间，找到一个可拟合的超平面（如SVM核，神经网络层，softmax等）。原因是“线性分界通常有助于减少方差variance而且是最简单，自然和可理解的”，同时减少数学、计算的复杂性。同时，当我们聚焦线性可分时，通常可以很好减少异常点、影响点和杠杆点的作用。因为超平面是对影响点和杠点（异常点）非常敏感。举个例子，在二维空间中，我们有一个预测器predictor(X)，和目标值（y)，假设X和y是很好的正相关。在这个情形下，假设X是正态分布，y也是正态分布，那么你可以拟合到一条很直的线，相比边界点（异常点，杠杆点），很多点都集中在线的中间，所以这个预测回归线在预测未知数据时，降低方差的影响。</p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_1.jpg" alt="数学基础"></p>
+<h2 id="P2有偏估计-amp-无偏估计"><a href="#P2有偏估计-amp-无偏估计" class="headerlink" title="P2有偏估计&amp;无偏估计"></a>P2有偏估计&amp;无偏估计</h2><ul>
+<li>本质来讲，无偏/无偏估计是指估算统计量的公式，无偏估计就是可以预见，多次采样计算的统计量是在真实值左右两边。类似于正态分布的钟型图形。比如对于均值μ估计。一定有的比μ大，有的比μ小。那么对于有偏估计，就是多次采样，估算的统计量将会在真实值的一侧（都是大于或者都是小于真实值）无偏估计并不一定比有偏估计更加”有效”，因为所谓估算有效是指更加靠近真实值。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_2.jpg" alt="数学基础"></p>
+<h2 id="P3二次型"><a href="#P3二次型" class="headerlink" title="P3二次型"></a>P3二次型</h2><ul>
+<li>二次型：n个变量的二次多项式称为二次型，即在一个多项式中，未知数的个数为任意多个，但每一项的次数都为2的多项式。线性代数的重要内容之一，它起源于几何学中二次曲线方程和二次曲面方程化为标准形问题的研究。二次型理论与域的特征有关。PCA跟特征值和特征向量有关，应该跟二次型有关。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_3.jpg" alt="数学基础"></p>
+<h2 id="P4二次型-amp-amp-P5："><a href="#P4二次型-amp-amp-P5：" class="headerlink" title="P4二次型 &amp;&amp; P5："></a>P4二次型 &amp;&amp; P5：</h2><ul>
+<li>PCA主成分分析用到实对称阵的相似对角化。PCA的目的是降噪和去冗余，是一种常用的数据分析方法。PCA通过线性变换将原始数据变换为一组各维度线性无关的表示，可用于提取数据的主要特征分量，常用于高维数据的降维。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_4.jpg" alt="数学基础"></p>
+<h2 id="P6协方差（Covariance）"><a href="#P6协方差（Covariance）" class="headerlink" title="P6协方差（Covariance）"></a>P6协方差（Covariance）</h2><ul>
+<li>在概率论和统计学中用于衡量两个变量的总体误差。而方差是协方差的一种特殊情况，即当两个变量是相同的情况。</li>
+<li>协方差表示的是两个变量的总体的误差，这与只表示一个变量误差的方差不同。 如果两个变量的变化趋势一致，也就是说如果其中一个大于自身的期望值，另外一个也大于自身的期望值，那么两个变量之间的协方差就是正值。 如果两个变量的变化趋势相反，即其中一个大于自身的期望值，另外一个却小于自身的期望值，那么两个变量之间的协方差就是负值。用于机器学习中衡量多个特征之间的关系。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_5.jpg" alt="数学基础"></p>
+<h2 id="P7Jensen不等式（Jensen’s-inequality）"><a href="#P7Jensen不等式（Jensen’s-inequality）" class="headerlink" title="P7Jensen不等式（Jensen’s inequality）"></a>P7Jensen不等式（Jensen’s inequality）</h2><ul>
+<li>在概率论、机器学习、测度论、统计物理等领域都有相关应用。在机器学习领域，用Jensen不等式用来证明KL散度大于等于0,EM算法推导最后也用到了Jensen不等式。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_6.jpg" alt="数学基础"></p>
 
     
     
         <a href="/2020/03/20/MachineLearning02/" class="post-more waves-effect waves-button">
-            
+            阅读全文...
         </a>
     </div>
     
@@ -179,13 +232,13 @@
 
     <div class="post-content" id="post-content" itemprop="postContent" >
 
-    
-         &lt;font size=5,face=”微软雅黑”&gt; &emsp;&emsp;兴致所至，做一个自己的网站，起名破站，敲代码水平有限，做得不咋样，但总算可以正常营业了，斯是陋室，惟吾德馨嘛。 &emsp;&emsp;“好记性不如烂笔头”，想把自己在学习中遇到的困惑，bug，以及自己最后的解决办法分享出来，互相学习借鉴，如果大家愿意来看，且能够解其惑，自然是相当棒的！其次也可以加深自身印象，在以后的日子里遇到同样的问题，能够更加迅速的解决。 &emsp;&emsp;这个博客网站呢，既是为了方便学习用的，也是记录生活。黎明将至，长话短说，总之纪念一下我的小破站做好了，Hello New World！ &emsp;&emsp;虽然这个博客网站是因学习而开，但是却也因此打开了新世界的大门，并不愿关上。 &emsp;&emsp;愿，脚踏实地，未来可期， &emsp;&emsp;望，法不阿贵，山河无恙。 &emsp;&emsp;（Markdown+LaTeX组合写博文确实不错）  
+     
+        <p>&lt;font size=5,face=”微软雅黑”&gt;<br>&emsp;&emsp;兴致所至，做一个自己的网站，起名破站，敲代码水平有限，做得不咋样，但总算可以正常营业了，斯是陋室，惟吾德馨嘛。<br>&emsp;&emsp;“好记性不如烂笔头”，想把自己在学习中遇到的困惑，bug，以及自己最后的解决办法分享出来，互相学习借鉴，如果大家愿意来看，且能够解其惑，自然是相当棒的！其次也可以加深自身印象，在以后的日子里遇到同样的问题，能够更加迅速的解决。<br>&emsp;&emsp;这个博客网站呢，既是为了方便学习用的，也是记录生活。黎明将至，长话短说，总之纪念一下我的小破站做好了，Hello New World！<br>&emsp;&emsp;虽然这个博客网站是因学习而开，但是却也因此打开了新世界的大门，并不愿关上。<br>&emsp;&emsp;愿，脚踏实地，未来可期，<br>&emsp;&emsp;望，法不阿贵，山河无恙。<br>&emsp;&emsp;（Markdown+LaTeX组合写博文确实不错）</font></p>
 
     
     
         <a href="/2020/03/16/2020%E7%AC%AC%E4%B8%80%E7%AF%87%E9%9A%8F%E7%AC%94/" class="post-more waves-effect waves-button">
-            
+            阅读全文...
         </a>
     </div>
     
@@ -219,25 +272,25 @@
 
     <div class="post-content" id="post-content" itemprop="postContent" >
 
-    
-         Welcome to  Hexo ! This is your very first post. Check  documentation  for more info. If you get any problems when using Hexo, you can find the answer in  troubleshooting  or you can ask me on  GitHub . 
-   Quick Start    Create a new post       1       $ hexo new  "My New Post"        
+     
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 
- More info:  Writing  
-   Run server       1       $ hexo server       
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
- More info:  Server  
-   Generate static files       1       $ hexo generate       
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
- More info:  Generating  
-   Deploy to remote sites       1       $ hexo deploy       
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
- More info:  Deployment  
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
     
     
         <a href="/2020/03/14/hello-world/" class="post-more waves-effect waves-button">
-            
+            阅读全文...
         </a>
     </div>
     
@@ -252,11 +305,78 @@
 <div class="mask" id="mask"></div>
 <a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
+<script>
+var BLOG_SHARE = {
+    title: "YinQiuMing~Blog",
+    pic: "/img/logo1.png",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "http://yoursite.com/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 
 
 <script src="/js/main.js"></script>
 
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+
+<script src="/js/search.js"></script>
 
 
 
