@@ -20,7 +20,7 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="">
+    <meta name="keywords" content="机器学习,数学理论">
     <meta name="description" content="机器学习中常用的数学基础 P1高斯分布（正态分布） 自然界产生的数据分布一般是正态分布（如年龄、身高、体重等），故当对数据不清楚其潜在的结构、即对数据潜在分布模式不明确时，近似采用正态分布。  在机器学习中，目标通常是使得数据线性可分，甚至意味着将数据投影到更高维空间，找到一个可拟合的超平面（如SVM核，神经网络层，softmax等）。原因是“线性分界通常有助于减少方差variance而且是最简单">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MachineLearning02">
@@ -35,9 +35,10 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_5.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_6.jpg">
 <meta property="article:published_time" content="2020-03-20T09:42:52.000Z">
-<meta property="article:modified_time" content="2020-03-20T13:41:43.926Z">
+<meta property="article:modified_time" content="2020-03-21T16:39:37.073Z">
 <meta property="article:author" content="Eric Yin">
-<meta property="article:tag" content="AI">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="数学理论">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_1.jpg">
     
@@ -208,28 +209,71 @@
 <li><p>在机器学习中，目标通常是使得数据线性可分，甚至意味着将数据投影到更高维空间，找到一个可拟合的超平面（如SVM核，神经网络层，softmax等）。原因是“线性分界通常有助于减少方差variance而且是最简单，自然和可理解的”，同时减少数学、计算的复杂性。同时，当我们聚焦线性可分时，通常可以很好减少异常点、影响点和杠杆点的作用。因为超平面是对影响点和杠点（异常点）非常敏感。举个例子，在二维空间中，我们有一个预测器predictor(X)，和目标值（y)，假设X和y是很好的正相关。在这个情形下，假设X是正态分布，y也是正态分布，那么你可以拟合到一条很直的线，相比边界点（异常点，杠杆点），很多点都集中在线的中间，所以这个预测回归线在预测未知数据时，降低方差的影响。</p>
 </li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_1.jpg" alt="数学基础"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_1.jpg" alt="数学基础" title="">
+                </div>
+                <div class="image-caption">数学基础</div>
+            </figure>
+
 <h2 id="P2有偏估计-amp-无偏估计"><a href="#P2有偏估计-amp-无偏估计" class="headerlink" title="P2有偏估计&amp;无偏估计"></a>P2有偏估计&amp;无偏估计</h2><ul>
 <li>本质来讲，无偏/无偏估计是指估算统计量的公式，无偏估计就是可以预见，多次采样计算的统计量是在真实值左右两边。类似于正态分布的钟型图形。比如对于均值μ估计。一定有的比μ大，有的比μ小。那么对于有偏估计，就是多次采样，估算的统计量将会在真实值的一侧（都是大于或者都是小于真实值）无偏估计并不一定比有偏估计更加”有效”，因为所谓估算有效是指更加靠近真实值。</li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_2.jpg" alt="数学基础"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_2.jpg" alt="数学基础" title="">
+                </div>
+                <div class="image-caption">数学基础</div>
+            </figure>
+
 <h2 id="P3二次型"><a href="#P3二次型" class="headerlink" title="P3二次型"></a>P3二次型</h2><ul>
 <li>二次型：n个变量的二次多项式称为二次型，即在一个多项式中，未知数的个数为任意多个，但每一项的次数都为2的多项式。线性代数的重要内容之一，它起源于几何学中二次曲线方程和二次曲面方程化为标准形问题的研究。二次型理论与域的特征有关。PCA跟特征值和特征向量有关，应该跟二次型有关。</li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_3.jpg" alt="数学基础"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_3.jpg" alt="数学基础" title="">
+                </div>
+                <div class="image-caption">数学基础</div>
+            </figure>
+
 <h2 id="P4二次型-amp-amp-P5："><a href="#P4二次型-amp-amp-P5：" class="headerlink" title="P4二次型 &amp;&amp; P5："></a>P4二次型 &amp;&amp; P5：</h2><ul>
 <li>PCA主成分分析用到实对称阵的相似对角化。PCA的目的是降噪和去冗余，是一种常用的数据分析方法。PCA通过线性变换将原始数据变换为一组各维度线性无关的表示，可用于提取数据的主要特征分量，常用于高维数据的降维。</li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_4.jpg" alt="数学基础"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_4.jpg" alt="数学基础" title="">
+                </div>
+                <div class="image-caption">数学基础</div>
+            </figure>
+
 <h2 id="P6协方差（Covariance）"><a href="#P6协方差（Covariance）" class="headerlink" title="P6协方差（Covariance）"></a>P6协方差（Covariance）</h2><ul>
 <li>在概率论和统计学中用于衡量两个变量的总体误差。而方差是协方差的一种特殊情况，即当两个变量是相同的情况。</li>
 <li>协方差表示的是两个变量的总体的误差，这与只表示一个变量误差的方差不同。 如果两个变量的变化趋势一致，也就是说如果其中一个大于自身的期望值，另外一个也大于自身的期望值，那么两个变量之间的协方差就是正值。 如果两个变量的变化趋势相反，即其中一个大于自身的期望值，另外一个却小于自身的期望值，那么两个变量之间的协方差就是负值。用于机器学习中衡量多个特征之间的关系。</li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_5.jpg" alt="数学基础"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_5.jpg" alt="数学基础" title="">
+                </div>
+                <div class="image-caption">数学基础</div>
+            </figure>
+
 <h2 id="P7Jensen不等式（Jensen’s-inequality）"><a href="#P7Jensen不等式（Jensen’s-inequality）" class="headerlink" title="P7Jensen不等式（Jensen’s inequality）"></a>P7Jensen不等式（Jensen’s inequality）</h2><ul>
 <li>在概率论、机器学习、测度论、统计物理等领域都有相关应用。在机器学习领域，用Jensen不等式用来证明KL散度大于等于0,EM算法推导最后也用到了Jensen不等式。</li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_6.jpg" alt="数学基础"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/2_6.jpg" alt="数学基础" title="">
+                </div>
+                <div class="image-caption">数学基础</div>
+            </figure>
+
+
 
         </div>
 
@@ -238,7 +282,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2020-03-20T13:41:43.926Z" itemprop="dateUpdated">2020-03-20 21:41:43</time>
+    Last updated: <time datetime="2020-03-21T16:39:37.073Z" itemprop="dateUpdated">2020-03-22 00:39:37</time>
 </span><br>
 
 
@@ -264,6 +308,8 @@
 
         <div class="post-footer">
             
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E7%90%86%E8%AE%BA/" rel="tag">数学理论</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+
 
             
 <div class="page-share-wrap">
