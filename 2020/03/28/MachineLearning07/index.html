@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>MachineLearning07 | yinqm_Blog | 书不成字，纸短情长</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="机器学习,数学理论">
+    <meta name="description" content="【核方法】核 核的介绍&amp;emsp;&amp;emsp;内核方法是一类用于模式分析或识别的算法，其最知名的使用是在支持向量机（SVM）。模式分析的一般任务是在一般类型的数据（例如序列，文本文档，点集，向量，图像等）中找到并研究一般类型的关系（例如聚类，排名，主成分，相关性，分类）图表等）。内核方法将数据映射到更高维的空间，希望在这个更高维的空间中，数据可以变得更容易分离或更好的结构化。对这种映射的形式也没有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MachineLearning07">
+<meta property="og:url" content="http://yinqm.com/2020/03/28/MachineLearning07/index.html">
+<meta property="og:site_name" content="yinqm_Blog">
+<meta property="og:description" content="【核方法】核 核的介绍&amp;emsp;&amp;emsp;内核方法是一类用于模式分析或识别的算法，其最知名的使用是在支持向量机（SVM）。模式分析的一般任务是在一般类型的数据（例如序列，文本文档，点集，向量，图像等）中找到并研究一般类型的关系（例如聚类，排名，主成分，相关性，分类）图表等）。内核方法将数据映射到更高维的空间，希望在这个更高维的空间中，数据可以变得更容易分离或更好的结构化。对这种映射的形式也没有">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Ming0818/CDN/7.PNG">
+<meta property="article:published_time" content="2020-03-28T08:24:04.000Z">
+<meta property="article:modified_time" content="2020-03-28T08:51:21.429Z">
+<meta property="article:author" content="Eric Yin">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="数学理论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Ming0818/CDN/7.PNG">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/TX.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Eric Yin</h5>
+          <a href="mailto:eric_ming96@163.com" title="eric_ming96@163.com" class="mail">eric_ming96@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Ming0818" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/5414507143?is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.popiask.cn/EricYin" target="_blank" rel="noopener"  >
+                <i class="icon icon-lg icon-link"></i>
+                向我提问POPI
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">MachineLearning07</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">MachineLearning07</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-28T08:24:04.000Z" itemprop="datePublished" class="page-time">
+  2020-03-28
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#【核方法】"><span class="post-toc-number">1.</span> <span class="post-toc-text">【核方法】</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#核"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">核</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#核方法"><span class="post-toc-number">2.</span> <span class="post-toc-text">核方法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#几种常用的核"><span class="post-toc-number">3.</span> <span class="post-toc-text">几种常用的核</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#线性核"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">线性核</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多项式核函数"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">多项式核函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#高斯核"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">高斯核</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#指数的内核"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">指数的内核</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#拉普拉斯算子核"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">拉普拉斯算子核</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-MachineLearning07"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">MachineLearning07</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-28 16:24:04" datetime="2020-03-28T08:24:04.000Z"  itemprop="datePublished">2020-03-28</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="【核方法】"><a href="#【核方法】" class="headerlink" title="【核方法】"></a>【核方法】</h1><h2 id="核"><a href="#核" class="headerlink" title="核"></a>核</h2><ul>
+<li><p>核的介绍<br>&emsp;&emsp;内核方法是一类用于模式分析或识别的算法，其最知名的使用是在支持向量机（SVM）。模式分析的一般任务是在一般类型的数据（例如序列，文本文档，点集，向量，图像等）中找到并研究一般类型的关系（例如聚类，排名，主成分，相关性，分类）图表等）。内核方法将数据映射到更高维的空间，希望在这个更高维的空间中，数据可以变得更容易分离或更好的结构化。对这种映射的形式也没有约束，这甚至可能导致无限维空间。然而，这种映射函数几乎不需要计算的，所以可以说成是在低维空间计算高维空间内积的一个工具。</p>
+</li>
+<li><p>核的诀窍<br>&emsp;&emsp;内核技巧是一个非常有趣和强大的工具。 它是强大的，因为它提供了一个从线性到非线性的连接以及任何可以只表示两个向量之间的点积的算法。 它来自如下事实：如果我们首先将我们的输入数据映射到更高维的空间，那么我在这个高维的空间进行操作出的效果，在原来那个空间就表现为非线性。</p>
+</li>
+<li><p>内核技巧非常有趣，因为不需要计算映射。 如果我们的算法只能根据两个向量之间的内积表示，我们所需要的就是用一些其他合适的空间替换这个内积。 这就是”技巧”的地方：无论使用怎样的点积，它都被内核函数替代。 核函数表示特征空间中的内积，如P1所示Xi转置*Xj。使用内核函数，该算法然后可以被携带到更高维空间中，而不将输入点显式映射到该空间中。 这是非常可取的，因为有时我们的高维特征空间甚至可以是无限维，因此不可能计算。在低维中计算高维数据的点积。 </p>
+</li>
+<li><p>核函数的性质<br>  &emsp;&emsp;核函数必须是连续的，对称的，并且最优选地应该具有正（半）定Gram矩阵。据说满足Mercer定理的核是正半定数，意味着它们的核矩阵只有非负特征值。使用肯定的内核确保优化问题将是凸的和解决方案将是唯一的。然而，许多并非严格定义的核函数在实践中表现得很好。一个例子是Sigmoid内核，尽管它广泛使用，但它对于其参数的某些值不是正半定的。 Boughorbel（2005）也实验证明，只有条件正定的内核在某些应用中可能胜过大多数经典内核。</p>
+</li>
+<li><p>内核还可以分为各向异性静止，各向同性静止，紧凑支撑，局部静止，非稳定或可分离非平稳。此外，内核也可以标记为scale-invariant（规模不变）或scale-dependent（规模依赖），这是一个有趣的属性，因为尺度不变内核驱动训练过程不变的数据的缩放。</p>
+<h1 id="核方法"><a href="#核方法" class="headerlink" title="核方法"></a>核方法</h1></li>
+<li><p>核方法kernel methods (KMs)是一类模式识别的算法。其目的是找出并学习一组数据中的相互的关系。用途较广的核方法有支持向量机、高斯过程等。核方法是解决非线性模式分析问题的一种有效途径，其核心思想是：首先，通过某种非线性映射将原始数据嵌入到合适的高维特征空间；然后，利用通用的线性学习器在这个新的空间中分析和处理模式。</p>
+</li>
+<li><p>相对于使用通用非线性学习器直接在原始数据上进行分析的范式，核方法有明显的优势：</p>
+</li>
+</ul>
+<p>1.首先，通用非线性学习器不便反应具体应用问题的特性，而核方法的非线性映射由于面向具体应用问题设计而便于集成问题相关的先验知识。<br>2.再者，线性学习器相对于非线性学习器有更好的过拟合控制从而可以更好地保证泛化性能。<br>还有，很重要的一点是核方法还是实现高效计算的途径，它能利用核函数将非线性映射隐含在线性学习器中进行同步计算，使得计算复杂度与高维特征空间的维数无关。</p>
+<ul>
+<li>本文对核方法（kernel method）进行简要的介绍:<br>&emsp;&emsp;核方法的主要思想是基于这样一个假设：“在低维空间中不能线性分割的点集，通过转化为高维空间中的点集时，很有可能变为线性可分的” ，例如有两类数据，一类为x<aUx>b；另一部分为a&lt;x&lt;b。要想在一维空间上线性分开是不可能的。然而我们可以通过F(x)=(x-a)(x-b)把一维空间上的点转化到二维空间上，这样就可以划分两类数据F(x)&gt;0，F(x)&lt;0；从而实现线性分割。然而，如果直接把低维度的数据转化到高维度的空间中，然后再去寻找线性分割平面，会遇到两个大问题，一是由于是在高维度空间中计算，导致维度祸根（curse of dimension）问题；二是非常的麻烦，每一个点都必须先转换到高维度空间，然后求取分割平面的参数等等；怎么解决这些问题？答案是通过核戏法（kernel trick）。（pku, shinningmonster, sewm)Kernel Trick:定义一个核函数.核函数的表达方式一般都不会显式地写为内积的形式，即我们不关心高维度空间的形式。核函数巧妙地解决了上述的问题，在高维度中向量的内积通过低维度的点的核函数就可以计算了。这种技巧被称为Kernel trick。</li>
+<li>这里还有一个问题：“为什么我们要关心向量的内积？”，一般地，我们可以把分类（或者回归）的问题分为两类：参数学习的形式和基于实例的学习形式。参数学习的形式就是通过一堆训练数据，把相应模型的参数给学习出来，然后训练数据就没有用了，对于新的数据，用学习出来的参数即可以得到相应的结论；而基于实例的学习（又叫基于内存的学习）则是在预测的时候也会使用训练数据，如KNN算法。而基于实例的学习一般就需要判定两个点之间的相似程度，一般就通过向量的内积来表达。从这里可以看出，核方法不是万能的，它一般只针对基于实例的学习。</li>
+<li>紧接着，我们还需要解决一个问题，即核函数的存在性判断和如何构造？ 既然我们不关心高维度空间的表达形式，那么怎么才能判断一个函数是否是核函数呢？<br>Mercer 定理：任何半正定的函数都可以作为核函数。所谓半正定的函数f(xi,xj)，是指拥有训练数据集合（x1,x2,…xn)，我们定义一个矩阵的元素aij = f(xi,xj)，这个矩阵式n*n的，如果这个矩阵是半正定的，那么f(xi,xj)就称为半正定的函数。这个mercer定理不是核函数必要条件，只是一个充分条件，即还有不满足mercer定理的函数也可以是核函数。<h1 id="几种常用的核"><a href="#几种常用的核" class="headerlink" title="几种常用的核"></a>几种常用的核</h1></li>
+<li>常见的核函数有高斯核，多项式核等等，在这些常见核的基础上，通过核函数的性质（如对称性等）可以进一步构造出新的核函数。SVM是核方法应用的经典模型。<h2 id="线性核"><a href="#线性核" class="headerlink" title="线性核"></a>线性核</h2></li>
+<li>线性内核是最简单的内核函数。 它由内积&lt;x，y&gt;加上可选的常数c给出。 使用线性内核的内核算法通常等于它们的非内核对应物，即具有线性内核的KPCA与标准PCA相同。<h2 id="多项式核函数"><a href="#多项式核函数" class="headerlink" title="多项式核函数"></a>多项式核函数</h2></li>
+<li>多项式核是非固定内核。 多项式内核非常适合于所有训练数据都归一化的问题。</li>
+<li>表达式：k（x，y）=（αx ^ T y + c）^ d。可调参数是斜率α，常数项c和多项式度d。<h2 id="高斯核"><a href="#高斯核" class="headerlink" title="高斯核"></a>高斯核</h2></li>
+<li>高斯核是径向基函数核的一个例子。或者，它也可以使用来实现。可调参数sigma在内核的性能中起着主要作用，并且应该仔细地调整到手头的问题。 如果过高估计，指数将几乎呈线性，高维投影将开始失去其非线性功率。 另一方面，如果低估，该函数将缺乏正则化，并且决策边界将对训练数据中的噪声高度敏感。<h2 id="指数的内核"><a href="#指数的内核" class="headerlink" title="指数的内核"></a>指数的内核</h2>指数核与高斯核密切相关，只有正态的平方被忽略。 它也是一个径向基函数内核。和高斯核确实很像，<h2 id="拉普拉斯算子核"><a href="#拉普拉斯算子核" class="headerlink" title="拉普拉斯算子核"></a>拉普拉斯算子核</h2></li>
+<li>拉普拉斯核心完全等同于指数内核，除了对sigma参数的变化不那么敏感。 作为等价的，它也是一个径向基函数内核。<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.jsdelivr.net/gh/Ming0818/CDN/7.PNG" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-03-28T08:51:21.429Z" itemprop="dateUpdated">2020-03-28 16:51:21</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/03/28/MachineLearning07/" target="_blank" rel="external">http://yinqm.com/2020/03/28/MachineLearning07/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://yinqm.com">
+            <img src="/img/TX.JPG" alt="Eric Yin">
+            Eric Yin
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E7%90%86%E8%AE%BA/" rel="tag">数学理论</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yinqm.com/2020/03/28/MachineLearning07/&title=《MachineLearning07》 — yinqm_Blog&pic=http://yinqm.com/img/TX.JPG" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yinqm.com/2020/03/28/MachineLearning07/&title=《MachineLearning07》 — yinqm_Blog&source=小破站还没设计好，先将就着，哈哈哈哈" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yinqm.com/2020/03/28/MachineLearning07/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MachineLearning07》 — yinqm_Blog&url=http://yinqm.com/2020/03/28/MachineLearning07/&via=http://yinqm.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yinqm.com/2020/03/28/MachineLearning07/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/03/28/MachineLearning06/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MachineLearning06</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        Thanks~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/55555.JPG" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/55555.JPG" data-alipay="/img/44444.JPG">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>This blog is licensed under a <a rel="license noopener" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Eric Yin &copy; 2019 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yinqm.com/2020/03/28/MachineLearning07/&title=《MachineLearning07》 — yinqm_Blog&pic=http://yinqm.com/img/TX.JPG" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yinqm.com/2020/03/28/MachineLearning07/&title=《MachineLearning07》 — yinqm_Blog&source=小破站还没设计好，先将就着，哈哈哈哈" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yinqm.com/2020/03/28/MachineLearning07/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MachineLearning07》 — yinqm_Blog&url=http://yinqm.com/2020/03/28/MachineLearning07/&via=http://yinqm.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yinqm.com/2020/03/28/MachineLearning07/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yinqm.com/2020/03/28/MachineLearning07/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
